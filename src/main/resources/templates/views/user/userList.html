@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common :: common"></div>
+    <style>
+        body{background-color: #e7eaec;height: 830px;}
+        .divStyle{margin-left: 20px;margin-right: 20px;margin-top: 30px;background-color: white;}
+        .userMassege{width: 220px;}
+    </style>
+    <script  th:src="@{/js/init/paging.js}"></script>
+    <script  th:src="@{/js/module/user/user.js}"></script>
+</head>
+<body>
+<div class="divStyle">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div style="height: 20px;"></div>
+            <div class="doc-buttons" style=" margin-left: 20px;">
+                <button id="userWindow" class="btn btn-primary" type="button">
+                    <i class="glyphicon glyphicon-plus"></i>&nbsp;新增
+                </button>
+                <button id="userEdit" class="btn btn-primary" type="button">
+                    <i class="glyphicon glyphicon-edit"></i>&nbsp;编辑
+                </button>
+                <button id = "userDelete" class="btn btn-primary" type="button">
+                    <i class="glyphicon glyphicon-trash"></i>&nbsp;删除
+                </button>
+            </div>
+            <div class="table-responsive" style="margin-top: 20px;margin-left: 20px;margin-right: 20px;">
+                <form role="form" class="form-inline" action="">
+                    <table class="table table table-striped table-bordered table-hover" id="table">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox"
+                                       onclick="$('.ii-checks').prop('checked',($(this).prop('checked') ? true : false ))"
+                                       name="input[]"></th>
+                            <th>账号</th>
+                            <th>姓名</th>
+                            <th>电话</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="userInfo : ${page.list}">
+                            <td><input type="checkbox" class="ii-checks" name="check" th:value="${userInfo.id}"></td>
+                            <td th:text="${userInfo.userName}"></td>
+                            <td th:text="${userInfo.realName}"></td>
+                            <td th:text="${userInfo.tel}"></td>
+                            <td th:text="${userInfo.des}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="fixed-table-pagination">
+                        <div class="pull-left pagination-detail">
+							<span class="pagination-info">显示第 <span th:text="${(page.pageNum - 1)* page.pageSize + 1}"></span> 到第
+								<span th:text="${page.pageNum == page.lastPage ? page.total : page.pageNum * page.pageSize }"></span> 条记录，总共<span th:text="${page.total}"></span>条记录</span> <span
+                                class="page-list">每页显示<span class="btn-group dropup">
+									<button type="button" class="btn btn-default  dropdown-toggle"
+                                            data-toggle="dropdown">
+										<span class="page-size" th:text="${page.pageSize}"></span> <span
+                                            class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu" id="resources_meny">
+										<li><a href="javascript:void(0)">10</a></li>
+										<li><a href="javascript:void(0)">20</a></li>
+									</ul>
+							</span> 条记录
+							</span>
+                        </div>
+
+                        <div style="margin-top: -19px;"  class="pull-right pagination " data-th-classappend="${page.pageSize >= page.total ? 'hidden': ''}">
+                            <ul class="pagination">
+                                <li class="page-first" data-th-classappend="${page.pageNum == page.firstPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+'1'+'\''+','+${page.pageSize}+')'"><a href="javascript:void(0)">«</a></li>
+                                <li class="page-pre" data-th-classappend="${page.pageNum == page.firstPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${page.pageNum == page.firstPage ? page.firstPage: page.pageNum - 1}+'\''+','+${page.pageSize}+')'"><a
+                                        href="javascript:void(0)">‹</a>
+                                </li>
+                                <li th:each="p : ${page.pages}" class="page-number"data-th-classappend="${page.pageNum == pStat.count ? 'active': ''}"
+                                 th:onclick="'javascript:loadResources(\''+${pStat.count}+'\''+','+${page.pageSize}+')'">
+                                    <a href="javascript:void(0)" th:text="${pStat.count}"></a>
+                                </li>
+                                <li class="page-next" data-th-classappend="${page.pageNum == page.lastPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${page.pageNum == page.lastPage ? page.lastPage:page.pageNum + 1}+'\''+','+${page.pageSize}+')'"><a
+                                        href="javascript:void(0)">›</a></li>
+                                <li class="page-last " data-th-classappend="${page.pageNum == page.lastPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${page.lastPage}+'\''+','+${page.pageSize}+')'"><a href="javascript:void(0)">»</a></li>
+                            </ul>
+                        </div> <br>
+                        <div style="height: 20px;"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body" style="height: 170px;">
+                <div>
+                    <div style="float: left;">账&nbsp;&nbsp;号&nbsp;:&nbsp;<input class="userMassege" type="text" id="userName" name="userName" /></div>
+                    <div style="float: left;margin-left: 10px;"> 姓&nbsp;&nbsp;名&nbsp;:&nbsp;<input class="userMassege"  type="text" id="realName" name="realName" /> </div>
+                </div>
+                <br>
+                <div style="margin-top: 20px;">
+                    <div style="float: left;"> 密&nbsp;&nbsp;码&nbsp;:&nbsp;<input class="userMassege" type="password" id="password" name="password" /></div>
+                    <div style="float: left;margin-left: 10px;"> 电&nbsp;&nbsp;话&nbsp;:&nbsp;<input class="userMassege" type="text" id="tel" name="tel" /></div>
+                </div>
+                <br>
+               <div style="margin-top: 20px;">
+                   <div style="float: left;">
+                       角&nbsp;&nbsp;色&nbsp;:&nbsp;
+                       <select id="role" style="margin-left: -4px; width: 220px;height: 25px;">
+
+                       </select>
+                   </div>
+                   <div style="float: left;margin-left: 10px;">
+                       <div style="float: left;">描&nbsp;&nbsp;述&nbsp;:&nbsp;</div>
+                       <div style="float: left;"><textarea class="userMassege" type="" id="des" name="des" ></textarea></div>
+                       <div><input id="userId" type="hidden" /></div>
+                   </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="userSave">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+</body>
+</html>

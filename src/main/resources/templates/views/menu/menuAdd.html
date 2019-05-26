@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common :: common"></div>
+    <style>
+        body{background-color: #e7eaec;height: 620px;}
+        .divStyle{margin-left: 20px;margin-right: 20px;margin-top: 30px;background-color: white;}
+        .blur {color: red;}
+    </style>
+    <script th:type="'text/javascript'" th:inline="javascript">
+        function checkCode() {
+            var username = $("#username").val();
+            var realname = $("#realname").val();
+            var password = $("#password").val();
+            if(realname.trim() == ""){
+                $("#code_username").addClass("blur");
+            }
+            if(realname.trim() == ""){
+                $("#code_realname").addClass("blur");
+            }
+            if(password.trim() == ""){
+                $("#code_password").addClass("blur");
+            }
+
+        }
+        function checkForm() {
+            if(form1.username.value=="")
+            {
+                form1.username.focus();
+                return false;
+            }
+            if(form1.realname.value=="")
+            {
+                form1.realname.focus();
+                return false;
+            }
+            if(form1.password.value=="")
+            {
+                form1.password.focus();
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="divStyle">
+        <form class="form-horizontal" name="form1" role="form" th:action="@{/all/user}" th:method="${userInfo == null ? 'post' : 'put'}" onsubmit="return checkForm()">
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户账号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" onblur="checkCode()" id="username" name="username" placeholder="请输入用户账号" th:value="${userInfo == null ? '' : userInfo.username}">
+                    <span  id="code_username" ></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="realname" class="col-sm-2 control-label">用户姓名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" onblur="checkCode()" id="realname" name="realname" placeholder="请输入用户姓名" th:value="${userInfo == null ? '': userInfo.realname}">
+                    <span  id="code_realname" ></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">用户密码</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" onblur="checkCode()" id="password" name="password" placeholder="请输入用户密码" th:value="${userInfo == null ? '' : userInfo.password}">
+                    <span  id="code_password" ></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input th:type="hidden" id="id" name="id" th:value="${ userInfo == null ? '' : userInfo.id}"/>
+                    <button type="submit" class="btn btn-default">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

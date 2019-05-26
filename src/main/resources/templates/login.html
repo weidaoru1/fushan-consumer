@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common :: common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}"/>
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+</head>
+<body onkeydown="keyLogin();">
+<div id="login">
+    <div class="center">
+        <div class="white fr">
+            <form action="" id="submit">
+                <a><span class="glyphicon glyphicon-user" style=""></span></a>&nbsp;&nbsp;<input type="text" name="userName" placeholder="请输入账号" class="userName" >
+                <p class="prompt_username"></p>
+                <a><span class="glyphicon glyphicon-lock" style=""></span></a>&nbsp;&nbsp;<input type="password" name="password" placeholder="请输入密码" class="password">
+                <p class="prompt_pass"></p>
+                <input type="submit" value="登录" class="submit login_submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

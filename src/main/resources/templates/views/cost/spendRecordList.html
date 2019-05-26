@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common :: common"></div>
+    <!--<div th:replace="editPayment/editPayment :: editPayment"></div>-->
+    <style>
+        body{background-color: #e7eaec;height: 830px;}
+        .divStyle{margin-left: 20px;margin-right: 20px;margin-top: 30px;background-color: white;}
+    </style>
+    <script  th:src="@{/js/init/paging.js}"></script>
+    <script  th:src="@{/js/module/cost/spend.js}"></script>
+</head>
+<body>
+    <div class="divStyle">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div style="height: 20px;">
+                    <input type="hidden" th:value="${spendId}" id="spendId"/>
+                </div>
+                <h4 style="text-align: center;">修改记录详情</h4>
+                <div class="table-responsive" style="margin-top: 20px;margin-left: 20px;margin-right: 20px;">
+                    <form role="form" class="form-inline" action="">
+                        <table class="table table table-striped table-bordered table-hover" id="table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"
+                                               onclick="$('.ii-checks').prop('checked',($(this).prop('checked') ? true : false ))"
+                                               name="input[]"></th>
+                                    <th>序号</th>
+                                    <th>修改人</th>
+                                    <th>支出人</th>
+                                    <th>支出事项</th>
+                                    <th>支出金额</th>
+                                    <th>支出方式</th>
+                                    <th>支出日期</th>
+                                    <th>修改时间</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="spendRecord : ${page.list}">
+                                    <td><input type="checkbox" class="ii-checks" name="check" th:value="${spendRecord.id}"></td>
+                                    <td th:text="${spendRecordStat.count}"></td>
+                                    <td th:text="${spendRecord.userName}"></td>
+                                    <td th:text="${spendRecord.spendName}"></td>
+                                    <td th:text="${spendRecord.spendMatters}"></td>
+                                    <td th:text="${spendRecord.amount}"></td>
+                                    <td th:switch="${spendRecord.type}">
+                                        <span th:case="1">现金</span>
+                                        <span th:case="2">支付宝</span>
+                                        <span th:case="3">微信</span>
+                                        <span th:case="4">转账</span>
+                                    </td>
+                                    <td th:text="${#dates.format(spendRecord.spendTime, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(spendRecord.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${spendRecord.remark}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="fixed-table-pagination">
+                            <div class="pull-left pagination-detail">
+                                <span class="pagination-info">显示第 <span th:text="${(page.pageNum - 1)* page.pageSize + 1}"></span> 到第
+                                    <span th:text="${page.pageNum == page.lastPage ? page.total : page.pageNum * page.pageSize }"></span> 条记录，总共<span th:text="${page.total}"></span>条记录</span> <span
+                                    class="page-list">每页显示<span class="btn-group dropup">
+                                <button type="button" class="btn btn-default  dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    <span class="page-size" th:text="${page.pageSize}"></span> <span
+                                        class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" id="resources_meny">
+                                    <li><a href="javascript:void(0)">10</a></li>
+                                    <li><a href="javascript:void(0)">20</a></li>
+                                </ul>
+                            </span> 条记录
+                            </span>
+                            </div>
+
+                            <div style="margin-top: -19px;"  class="pull-right pagination " data-th-classappend="${page.pageSize >= page.total ? 'hidden': ''}">
+                                <ul class="pagination">
+                                    <li class="page-first" data-th-classappend="${page.pageNum == page.firstPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+'1'+'\''+','+${page.pageSize}+')'"><a href="javascript:void(0)">«</a></li>
+                                    <li class="page-pre" data-th-classappend="${page.pageNum == page.firstPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${page.pageNum == page.firstPage ? page.firstPage: page.pageNum - 1}+'\''+','+${page.pageSize}+')'"><a
+                                            href="javascript:void(0)">‹</a>
+                                    </li>
+                                    <li th:each="p : ${page.pages}" class="page-number"data-th-classappend="${page.pageNum == pStat.count ? 'active': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${pStat.count}+'\''+','+${page.pageSize}+')'">
+                                        <a href="javascript:void(0)" th:text="${pStat.count}"></a>
+                                    </li>
+                                    <li class="page-next" data-th-classappend="${page.pageNum == page.lastPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${page.pageNum == page.lastPage ? page.lastPage:page.pageNum + 1}+'\''+','+${page.pageSize}+')'"><a
+                                            href="javascript:void(0)">›</a></li>
+                                    <li class="page-last " data-th-classappend="${page.pageNum == page.lastPage ? 'disabled': ''}"
+                                        th:onclick="'javascript:loadResources(\''+${page.lastPage}+'\''+','+${page.pageSize}+')'"><a href="javascript:void(0)">»</a></li>
+                                </ul>
+                            </div> <br>
+                            <div style="height: 30px;">
+
+                            </div>
+                            <div style="float: right;margin-right: 10px;margin-bottom: 20px;">
+                                <button style="width: 80px;" type="button" class="btn btn-default" id="spendReturn">返回</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        $("#resources_meny>li").click(function(){
+            var rul = getRootPath() + location.pathname +"?pageSize="+$(this).text() + "&spendId="+$("#spendId").val();
+            location.assign(rul);
+        });
+    });
+    function loadResources(pageNum,pageSize){
+        var rul = getRootPath() + location.pathname +"?pageNum="+pageNum+"&pageSize="+pageSize+ "&spendId="+$("#spendId").val();
+        location.assign(rul);
+    }
+    function getRootPath() {
+        var curWwwPath = location.href;
+        var pathName = location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        var localhostPaht = curWwwPath.substring(0, pos);
+        return localhostPaht;
+    }
+</script>
+</html>

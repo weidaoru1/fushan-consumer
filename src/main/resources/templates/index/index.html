@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common :: common"></div>
+    <title>个人系统</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script  th:src="@{/js/init/index.js}"></script>
+    <style>
+        body{background-color: #e7eaec;}
+    </style>
+    <script>
+        $(document).ready( function() {
+            //给它设置 1 秒的停顿时间，这样折叠效果才有用
+            setTimeout("menuClick()", 500);
+        });
+    </script>
+</head>
+<body>
+    <!--<div class="topbar" style="height: 40px;background-color: #2f4050;">-->
+    <!--</div>-->
+    <div class="topbar" style="height: 10%;background-color: #2f4050;">
+        <img th:src="@{/images/bg.jpg}" style="height: 100%;width: 100%;"/>
+    </div>
+    <div style="height: 90%;">
+        <div style="float: left;width: 13%;height: 100%;background-color: #2f4050;">
+            <div class="sidebar-collapse" style="background-color: #245580; height: 160px;text-align: center;">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span>
+                                <img alt="image" class="img-circle" th:src="@{/images/index/beita.png}" width="64px" height="64px"/>
+                            </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs" th:text="${userName}">
+                                        <strong class="font-bold"></strong>
+                                    </span>
+                                    <span
+                                            class="text-muted text-xs block"><span th:text="${roleName}"></span><b class="caret"></b>
+                                    </span>
+                                </span>
+                            </a>
+                            <ul style="margin-left: -16px;" class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="J_menuItem" href="#">修改头像</a>
+                                </li>
+                                <li><a class="J_menuItem">个人资料</a></li>
+                                <li><a class="J_menuItem">联系我们</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/login/logout">安全退出</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div style="background-color: #2f4050;"  id="menuId"></div>
+        </div>
+        <div style="float: left; width: 87%;height: 100%;">
+            <div style="height: 100%;">
+                <div class="row content-tabs" style="height: 42px;">
+                    <button class="roll-nav roll-left J_tabLeft">
+                        <i class="fa fa-backward"></i>
+                    </button>
+
+                    <nav class="page-tabs J_menuTabs">
+                        <div class="page-tabs-content">
+                            <a href="javascript:void(0);" class="J_menuTab active main" id="main" data-id="main">首页</a>
+                        </div>
+                    </nav>
+                    <button style="margin-right: 20px;" class="roll-nav roll-right J_tabRight">
+                        <i class="fa fa-forward"></i>
+                    </button>
+                </div>
+                <div class="row J_mainContent bbg" id="content-main" style="height: calc(100% - 42px);">
+                    <div class="J_box smartmenu index"  name="iframe0" data-id="main" id="indexId"style="height: 100%;">
+                        <iframe  id="iframepage" name="iframepage" width="100%" th:src="@{'/main'}" height="100%"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

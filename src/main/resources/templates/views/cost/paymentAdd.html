@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common :: common"></div>
+    <style type="text/css">
+        body{background-color: #e7eaec;height: 700px;}
+        .divStyle{margin-left: 20px;margin-right: 20px;margin-top: 30px;background-color: white;}
+    </style>
+    <script  th:src="@{/js/module/cost/payment.js}"></script>
+</head>
+<body>
+<div class="divStyle">
+    <div class="modal-body">
+        <div style="text-align: center;"><h4>收入记录添加</h4></div>
+        <form class="form-horizontal" name="form1" role="form">
+            <div class="form-group">
+                <label for="customerName" class="col-sm-2 control-label">客户姓名</label>
+                <div class="col-sm-10">
+                    <input style="width: 780px;" type="text" class="form-control" id="customerName" name="customerName" placeholder="请输入客户姓名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact" class="col-sm-2 control-label">联系方式</label>
+                <div class="col-sm-10">
+                    <input style="width: 780px;" type="tel" class="form-control" id="contact" name="contact" placeholder="请输入联系方式">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="payee" class="col-sm-2 control-label">收款人</label>
+                <div class="col-sm-10">
+                    <input style="width: 780px;" type="text" class="form-control" id="payee" name="payee" placeholder="请输入收款人">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="amount" class="col-sm-2 control-label">实收金额</label>
+                <div class="col-sm-10">
+                    <input style="width: 780px;" type="number" class="form-control" id="amount" name="amount" placeholder="请输入金额">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="type" class="col-sm-2 control-label">收款方式</label>
+                <div class="col-sm-10">
+                    <select style="height: 35px; width:780px;" id="type" name="type">
+                        <option value ="1">现金</option>
+                        <option value ="2">支付宝</option>
+                        <option value ="3">微信</option>
+                        <option value ="4">转账</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="paymentTime" class="col-sm-2 control-label">收款日期</label>
+                <div class="col-sm-10">
+                    <input style="width: 780px;" type="date" class="form-control" id="paymentTime" name="paymentTime" placeholder="请选择收款日期">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="detailsDes" class="col-sm-2 control-label">详情描述</label>
+                <div class="col-sm-10">
+                    <textarea style="width: 780px;" class="form-control" id="detailsDes" name="detailsDes"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="remark" class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-10">
+                    <textarea style="width: 780px;" class="form-control" id="remark" name="remark"></textarea>
+                </div>
+            </div>
+            <div><input type="hidden" id="id" /></div>
+            <div><input type="hidden" id="createTime" /></div>
+            <div style="text-align: center;">
+                <button style="width: 80px;" type="button" class="btn btn-default" id="paymentClose">取消</button>
+                <button style="margin-left: 25px; width: 80px;" type="button" class="btn btn-primary" id="paymentSave">保存</button>
+            </div>
+            </form>
+    </div>
+</div>
+</body>
+</html>
